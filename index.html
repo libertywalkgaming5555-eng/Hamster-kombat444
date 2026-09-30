@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Hamster Kombat</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="mobile-wrapper">
+    <div class="app-screen">
+      
+      <!-- Top Metrics 3-Cards Row -->
+      <div class="top-stats-container">
+        <div class="stat-box earn-per-tap-box" id="statEarnTap">
+          <div class="stat-title text-orange">Earn per tap</div>
+          <div class="stat-value">
+            <img src="coin.svg" class="mini-coin-img" alt="coin">
+            <span>+<span id="earnPerTapVal">1</span></span>
+          </div>
+        </div>
+
+        <div class="stat-box coins-level-box" id="statLevelUp">
+          <div class="stat-title text-blue">Coins to level up</div>
+          <div class="stat-value">
+            <span id="coinsToNextLevel">5K</span>
+          </div>
+        </div>
+
+        <div class="stat-box profit-hour-box" id="statProfitHour">
+          <div class="stat-title text-green">Profit per hour</div>
+          <div class="stat-value">
+            <img src="coin.svg" class="mini-coin-img" alt="coin">
+            <span id="profitPerHourVal">0</span>
+            <span class="info-circle">i</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Balance Center Area -->
+      <div class="main-balance-row">
+        <img src="coin.svg" class="big-gold-coin" alt="Hamster Coin">
+        <span class="balance-number" id="totalBalance">100</span>
+      </div>
+
+      <!-- Rank & Level Progress Bar -->
+      <div class="rank-level-container">
+        <div class="rank-info-header">
+          <div class="rank-name-arrow" id="rankBtn">
+            <span id="rankBadge">Bronze</span>
+            <span class="chevron">&rsaquo;</span>
+          </div>
+          <div class="level-fraction">
+            <span class="lvl-label">Level</span>
+            <span class="lvl-nums" id="levelNumbers">1/10</span>
+          </div>
+        </div>
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill" id="levelProgressBar" style="width: 2%;"></div>
+        </div>
+      </div>
+
+      <!-- Hamster Tap Stage -->
+      <div class="hamster-tap-area">
+        <div class="hamster-circle-glow" id="hamsterRing">
+          <img src="hamster.png" class="hamster-image" id="hamsterImg" alt="Hamster">
+        </div>
+      </div>
+
+      <!-- Bottom Energy and Boost Status Bar -->
+      <div class="bottom-action-bar">
+        <div class="energy-display">
+          <span class="lightning-icon">⚡</span>
+          <span class="energy-text"><span id="currentEnergy">1000</span> / <span id="maxEnergy">1000</span></span>
+        </div>
+
+        <div class="boost-display" id="boostModalBtn">
+          <span class="rocket-icon">🚀</span>
+          <span class="boost-text">Boost</span>
+        </div>
+      </div>
+
+      <!-- Bottom Navigation Bar (Mine, Friends, Earn, Airdrop) -->
+      <div class="nav-bar">
+        <button class="nav-btn active" id="navExchange" data-target="exchange">
+          <span class="nav-ico">🪙</span>
+          <span class="nav-txt">Exchange</span>
+        </button>
+        <button class="nav-btn" id="navMine" data-target="mine">
+          <span class="nav-ico">⛏️</span>
+          <span class="nav-txt">Mine</span>
+        </button>
+        <button class="nav-btn" id="navFriends" data-target="friends">
+          <span class="nav-ico">👥</span>
+          <span class="nav-txt">Friends</span>
+        </button>
+        <button class="nav-btn" id="navEarn" data-target="earn">
+          <span class="nav-ico">📋</span>
+          <span class="nav-txt">Earn</span>
+        </button>
+        <button class="nav-btn" id="navAirdrop" data-target="airdrop">
+          <span class="nav-ico">🪂</span>
+          <span class="nav-txt">Airdrop</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- ================= MODALS ================= -->
+
+    <!-- Mine Modal (Cards / Upgrades) -->
+    <div class="modal-overlay" id="mineModal">
+      <div class="modal-sheet">
+        <div class="modal-head">
+          <div class="modal-title">⛏️ Mine & Fermani Yangilash</div>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="cat-pill-tabs">
+          <button class="cat-pill active" data-cat="markets">Markets</button>
+          <button class="cat-pill" data-cat="pr">PR & Team</button>
+          <button class="cat-pill" data-cat="legal">Legal</button>
+          <button class="cat-pill" data-cat="specials">Specials</button>
+        </div>
+        <div class="cards-grid" id="mineCardsGrid"></div>
+      </div>
+    </div>
+
+    <!-- Friends Modal -->
+    <div class="modal-overlay" id="friendsModal">
+      <div class="modal-sheet">
+        <div class="modal-head">
+          <div class="modal-title">👥 Do'stlarni taklif qilish</div>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="bonus-box">
+          <div class="bonus-title">🎁 Har bir do'st uchun: <strong>+5,000 🪙</strong></div>
+          <button class="btn-primary mt-2" id="simulateFriendBtn">+ Do'st qo'shish (Test)</button>
+        </div>
+        <div class="friends-list-box" id="friendsList"></div>
+      </div>
+    </div>
+
+    <!-- Earn Tasks Modal -->
+    <div class="modal-overlay" id="earnModal">
+      <div class="modal-sheet">
+        <div class="modal-head">
+          <div class="modal-title">📋 Vazifalar (Tasks)</div>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="tasks-list" id="tasksList"></div>
+      </div>
+    </div>
+
+    <!-- Boosts Modal -->
+    <div class="modal-overlay" id="boostModal">
+      <div class="modal-sheet">
+        <div class="modal-head">
+          <div class="modal-title">🚀 Kuchaytirgichlar (Boosts)</div>
+          <button class="modal-close">&times;</button>
+        </div>
+        
+        <div class="boost-card">
+          <div class="boost-left">
+            <span class="boost-emoji">⚡</span>
+            <div>
+              <div class="boost-h">Full Energy</div>
+              <div class="boost-sub"><span id="freeEnergyLeft">6/6</span> marta bepul</div>
+            </div>
+          </div>
+          <button class="boost-action" id="claimFullEnergyBtn">Olish</button>
+        </div>
+
+        <div class="boost-card">
+          <div class="boost-left">
+            <span class="boost-emoji">👆</span>
+            <div>
+              <div class="boost-h" id="multitapTitle">Multitap (+2)</div>
+              <div class="boost-sub">Narxi: <span id="multitapCost">10,000</span> 🪙</div>
+            </div>
+          </div>
+          <button class="boost-action" id="upgradeMultitapBtn">Sotib olish</button>
+        </div>
+
+        <div class="boost-card">
+          <div class="boost-left">
+            <span class="boost-emoji">🔋</span>
+            <div>
+              <div class="boost-h">Energy Limit (+500)</div>
+              <div class="boost-sub">Narxi: <span id="energyLimitCost">2,000</span> 🪙</div>
+            </div>
+          </div>
+          <button class="boost-action" id="upgradeEnergyLimitBtn">Oshirish</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast message container -->
+    <div class="toast-container" id="toastContainer"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
